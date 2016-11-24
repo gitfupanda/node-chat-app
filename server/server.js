@@ -22,15 +22,13 @@ io.on('connection', (socket) => {
         console.log("Client disconnected");
     });
 
-
-    socket.emit('newMessage', {
-        "from": "John Smith",
-        "text": "A quick brown fox jumps over the lazy dog!",
-        "createdAt": new Date().getTime().toString()
-    } );
-
     socket.on('createMessage', (msg) => {
         console.log('createMessage', msg);
+        io.emit('newMessage', {
+            from: msg.from,
+            text: msg.text,
+            "createdAt": new Date().getTime().toString()
+        })
     });
 
 });
