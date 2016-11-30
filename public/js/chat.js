@@ -75,7 +75,6 @@ jQuery('#message-form').on('submit', function(e) {
     var messageTextbox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-        from: "Browser",
         text: messageTextbox.val()
     }, function (data){
         messageTextbox.val('')
@@ -96,7 +95,8 @@ locationButton.on('click', function (e) {
             longitude: position.coords.longitude
         });
         locationButton.removeAttr('disabled').text('Send Location');
-    }, function (){
+    }, function (err){
+        console.log(err);
         alert('Unable to fetch location');
         locationButton.removeAttr('disabled').text('Send Location');
     });
