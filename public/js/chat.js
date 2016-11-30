@@ -34,6 +34,15 @@ socket.on('disconnect', function() {
     console.log("disconnected from server");
 });
 
+socket.on('updateUserList', function(users) {
+    var ol = jQuery('<ol></ol>');
+    users.forEach(function(user) {
+        ol.append(jQuery('<li></li>').text(user));
+    })
+
+    jQuery('#users').html(ol);
+});
+
 socket.on('newMessage', function(msg) {
     
     var template = jQuery('#message-template').html();
@@ -58,13 +67,6 @@ socket.on('newLocationMessage', function(msg){
 
     jQuery('#messages').append(html);
     scrollToBottom();
-});
-
-socket.emit('createMessage', {
-    from: "Frank",
-    text: "Hi Server!"
-}, function(data){
-    console.log(data);
 });
 
 jQuery('#message-form').on('submit', function(e) {
